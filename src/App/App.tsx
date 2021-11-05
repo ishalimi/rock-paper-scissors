@@ -17,6 +17,7 @@ function App() {
   const [gameResult, setGameResult] = useState<string>('');
   const [firstPlayerWinsCounter, setFirstPlayerWinsCounter] = useState(0);
   const [secondPlayerWinsCounter, setSecondPlayerWinsCounter] = useState(0);
+  const MAX_NB_GAMES = 3;
 
   const onSecondPlayerMoveChange = useCallback((action: Action) => {
     if (selectedPlayer === SelectedPlayer.SecondPlayer) {
@@ -38,7 +39,6 @@ function App() {
 
       const result = movesComparator(firstPlayerLastMove, secondPlayerLastMove);
 
-
       if (result === 1) {
         setFirstPlayerWinsCounter(prev => prev + 1);
       }
@@ -50,7 +50,7 @@ function App() {
   }, [firstPlayerMoves, secondPlayerMoves, gameMode])
 
   useEffect(() => {
-    if (firstPlayerWinsCounter + secondPlayerWinsCounter === 3) {
+    if (firstPlayerWinsCounter + secondPlayerWinsCounter === MAX_NB_GAMES) {
       setGameResult(firstPlayerWinsCounter > secondPlayerWinsCounter ? 'First Player Won' : `${gameMode === GameMode.PlayerVsPlayer ? 'Second Player' : 'Computer'} Won`)
     }
   }, [gameMode, firstPlayerWinsCounter, secondPlayerWinsCounter]);
